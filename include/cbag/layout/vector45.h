@@ -48,6 +48,9 @@ limitations under the License.
 #define CBAG_LAYOUT_VECTOR45_H
 
 #include <iosfwd>
+#include <sstream>
+
+#include <fmt/format.h>
 
 #include <cbag/common/typedefs.h>
 
@@ -81,5 +84,13 @@ struct vector45 {
 
 } // namespace layout
 } // namespace cbag
+
+template <> struct fmt::formatter<cbag::layout::vector45> : fmt::formatter<std::string> {
+    auto format(const cbag::layout::vector45 &v, fmt::format_context &ctx) const {
+        std::ostringstream oss;
+        oss << v;
+        return fmt::formatter<std::string>::format(oss.str(), ctx);
+    }
+};
 
 #endif

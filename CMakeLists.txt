@@ -228,7 +228,7 @@ target_link_libraries(cbag
   oaCommon
   oaPlugIn
   PRIVATE
-  stdc++fs
+  $<$<PLATFORM_ID:Linux>:stdc++fs>
   ${Boost_LIBRARIES}
   yaml-cpp
   oaDM
@@ -257,7 +257,7 @@ target_link_libraries(cbag
   cbag_polygon
   fmt::fmt-header-only
   PRIVATE
-  stdc++fs
+  $<$<PLATFORM_ID:Linux>:stdc++fs>
   ${Boost_LIBRARIES}
   yaml-cpp
   )

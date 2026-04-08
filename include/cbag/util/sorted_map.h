@@ -56,28 +56,10 @@ namespace util {
 
 template <class Key, class T, class Compare = std::less<Key>> class sorted_map {
   public:
-    struct value_compare;
     using key_type = Key;
     using mapped_type = T;
     using value_type = std::pair<key_type, mapped_type>;
-    using vector_type = sorted_vector<value_type, value_compare>;
-    using size_type = typename vector_type::size_type;
-    using difference_type = typename vector_type::difference_type;
     using key_compare = Compare;
-    using reference = value_type &;
-    using const_reference = const value_type &;
-    using iterator = typename vector_type::iterator;
-    using const_iterator = typename vector_type::const_iterator;
-    using reverse_iterator = typename vector_type::reverse_iterator;
-    using const_reverse_iterator = typename vector_type::const_reverse_iterator;
-
-    template <typename V>
-    using IsValue =
-        std::enable_if_t<std::is_same_v<value_type, std::remove_cv_t<std::remove_reference_t<V>>>>;
-
-    template <typename V>
-    using IsKey =
-        std::enable_if_t<std::is_same_v<key_type, std::remove_cv_t<std::remove_reference_t<V>>>>;
 
     struct value_compare {
         using is_transparent = void;
@@ -97,6 +79,24 @@ template <class Key, class T, class Compare = std::less<Key>> class sorted_map {
             return key_comp_(lhs, rhs);
         }
     };
+
+    using vector_type = sorted_vector<value_type, value_compare>;
+    using size_type = typename vector_type::size_type;
+    using difference_type = typename vector_type::difference_type;
+    using reference = value_type &;
+    using const_reference = const value_type &;
+    using iterator = typename vector_type::iterator;
+    using const_iterator = typename vector_type::const_iterator;
+    using reverse_iterator = typename vector_type::reverse_iterator;
+    using const_reverse_iterator = typename vector_type::const_reverse_iterator;
+
+    template <typename V>
+    using IsValue =
+        std::enable_if_t<std::is_same_v<value_type, std::remove_cv_t<std::remove_reference_t<V>>>>;
+
+    template <typename V>
+    using IsKey =
+        std::enable_if_t<std::is_same_v<key_type, std::remove_cv_t<std::remove_reference_t<V>>>>;
 
   private:
     vector_type data_;

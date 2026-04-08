@@ -156,7 +156,7 @@ template <class T, class Compare = std::less<T>> class sorted_vector {
     template <class K> const_iterator find_exact(const K &x) const {
         auto iter = lower_bound(x);
         auto end = data_.end();
-        return (iter != end && *iter == x) ? iter : end;
+        return (iter != end && !comp_(*iter, x) && !comp_(x, *iter)) ? iter : end;
     }
 
     void clear() noexcept { data_.clear(); }
